@@ -11,7 +11,7 @@ import {
   Divider,
 } from "antd";
 import { CreditCardOutlined, BankOutlined } from "@ant-design/icons";
-import { useCart } from "../providers/CartProvider";
+import { useCart } from "../providers/cartProvider";
 import productService from "../service/productService";
 import { Product } from "../types/Product";
 import { CartItemWithInfo } from "./Cart";

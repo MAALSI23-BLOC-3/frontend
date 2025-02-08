@@ -3,7 +3,7 @@ import "./App.css";
 import { AuthProvider } from "./providers/authProvider";
 import { ConfigProvider, theme } from "antd";
 import AppRoutes from "./app/Routes";
-import { CartProvider } from "./providers/CartProvider";
+import { CartProvider } from "./providers/cartProvider";
 
 function App() {
   return (

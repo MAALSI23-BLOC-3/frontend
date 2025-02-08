@@ -5,7 +5,7 @@ import {
   PlusCircleOutlined,
   ShopOutlined,
 } from "@ant-design/icons";
-import { useCart } from "../providers/CartProvider";
+import { useCart } from "../providers/cartProvider";
 
 const { Meta } = Card;
 const { Text, Title } = Typography;

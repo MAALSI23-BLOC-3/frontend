@@ -2,7 +2,7 @@ import { ShopOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Tooltip, Button } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { NavLink } from "react-router";
-import { useCart } from "../providers/CartProvider";
+import { useCart } from "../providers/cartProvider";
 
 interface HeaderProps {
   children?: React.ReactNode;

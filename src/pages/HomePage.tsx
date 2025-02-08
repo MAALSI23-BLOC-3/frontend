@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Layout, Tooltip, Typography } from "antd";
-import { ShopOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Navigate, NavLink } from "react-router";
+import { Button, Layout, Typography } from "antd";
+import { ShopOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const { Title } = Typography;
 
