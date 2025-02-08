@@ -31,7 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          // Validate token with your backend
+          // Validate token with  backend
           const user = await authService.validateToken(token);
           setUser(user);
         }
@@ -41,16 +41,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     };
+
     checkAuth();
   }, []);
 
   const login = async (userLogin: UserLogin) => {
     try {
-      // Replace with your actual API call
-      const { user, token } = await authService.login(userLogin);
-
-      localStorage.setItem("token", token);
-      setUser(user);
+      const { accessToken } = await authService.login(userLogin);
+      localStorage.setItem("token", accessToken);
+      setUser(await authService.validateToken(accessToken));
     } catch (error) {
       console.error("Login failed", error);
       throw error;
@@ -64,9 +63,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const register = async (userReg: User) => {
     try {
-      // Replace with your actual API call
-      const { user, token } = await authService.register(userReg);
-      localStorage.setItem("token", token);
+      const { accessToken } = await authService.register(userReg);
+      localStorage.setItem("token", accessToken);
+      const user = await authService.validateToken(accessToken);
       setUser(user);
     } catch (error) {
       console.error("Register failed", error);

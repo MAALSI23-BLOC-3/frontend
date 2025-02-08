@@ -10,8 +10,11 @@ class ProductService {
     return response.data;
   }
 
-  async getById(id: string): Promise<Product> {
-    return axios.get(API_CONFIG.SINGLEPRODUCT + `/${id}`);
+  async getById(id: number): Promise<Product> {
+    const res = await axios.get(
+      API_CONFIG.API_BASE_URL + API_CONFIG.SINGLEPRODUCT + `/${id}`
+    );
+    return res.data;
   }
 }
 

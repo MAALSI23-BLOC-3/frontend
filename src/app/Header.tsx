@@ -2,20 +2,16 @@ import { ShopOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Tooltip, Button } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { NavLink } from "react-router";
+import { useCart } from "../providers/CartProvider";
 
 interface HeaderProps {
   children?: React.ReactNode;
 }
 const SiteHeader: React.FC<HeaderProps> = ({ children }) => {
+  const { cart } = useCart();
   return (
     <div>
-      <Header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          backgroundColor: "#f0f2f5",
-        }}
-      >
+      <Header className="site-header">
         <NavLink to="/">
           <img src="/images/logo.png" alt="" className="logo" />
         </NavLink>
@@ -34,14 +30,23 @@ const SiteHeader: React.FC<HeaderProps> = ({ children }) => {
           </NavLink>
           <NavLink to="/cart">
             <Tooltip title="Panier">
-              <Button
-                title="Panier"
-                shape="circle"
-                type="default"
-                size="large"
-                icon={<ShoppingCartOutlined />}
-                //   onClick={() => Navigate({ to: "/products" })}
-              />
+              <div className="cartButtonWrapper">
+                <Button
+                  title="Panier"
+                  shape="circle"
+                  type="default"
+                  size="large"
+                  icon={<ShoppingCartOutlined />}
+
+                  //   onClick={() => Navigate({ to: "/products" })}
+                />
+                <span className="cartCount">
+                  {cart?.items.reduce(
+                    (intial, current) => intial + current.quantity,
+                    0
+                  )}
+                </span>
+              </div>
             </Tooltip>
           </NavLink>
         </div>

@@ -3,18 +3,21 @@ import "./App.css";
 import { AuthProvider } from "./providers/authProvider";
 import { ConfigProvider, theme } from "antd";
 import AppRoutes from "./app/Routes";
+import { CartProvider } from "./providers/CartProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ConfigProvider
-          theme={{
-            algorithm: [theme.defaultAlgorithm],
-          }}
-        >
-          <AppRoutes />
-        </ConfigProvider>
+        <CartProvider>
+          <ConfigProvider
+            theme={{
+              algorithm: [theme.defaultAlgorithm],
+            }}
+          >
+            <AppRoutes />
+          </ConfigProvider>
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   );

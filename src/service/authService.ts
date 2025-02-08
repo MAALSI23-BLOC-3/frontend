@@ -13,11 +13,17 @@ class AuthService {
   }
 
   async register(user: User): Promise<LoginResponse> {
-    return axios.post(API_CONFIG.REGISTER + "signup", user);
+    return axios.post(
+      API_CONFIG.API_BASE_URL + API_CONFIG.REGISTER + "signup",
+      user
+    );
   }
 
   async validateToken(token: string): Promise<User> {
-    const response = await axios.post(API_CONFIG.VALIDATEUSER, { token });
+    const response = await axios.get(
+      API_CONFIG.API_BASE_URL + API_CONFIG.VALIDATEUSER,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     return response.data;
   }
 }

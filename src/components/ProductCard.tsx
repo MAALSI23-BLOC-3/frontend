@@ -1,6 +1,11 @@
 import { Card, Row, Col, Tag, Space, Carousel, Typography, Button } from "antd";
 import { Product } from "../types/Product";
-import { ShopOutlined } from "@ant-design/icons";
+import {
+  MinusCircleOutlined,
+  PlusCircleOutlined,
+  ShopOutlined,
+} from "@ant-design/icons";
+import { useCart } from "../providers/CartProvider";
 
 const { Meta } = Card;
 const { Text, Title } = Typography;
@@ -10,12 +15,15 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { cart, addToCart, removeFromCart } = useCart();
+  const inCart = cart?.items.find((item) => item.productId === product.id);
+
   return (
     <Card
       hoverable
       className="productCard"
       cover={
-        product.images.length > 0 ? (
+        product?.images?.length > 0 ? (
           <Carousel autoplay>
             {product.images.map((image, index) => (
               <div key={index}>
@@ -88,14 +96,30 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </Row>
       </Space>
 
-      <Button
-        type="primary"
-        size="large"
-        icon={<ShopOutlined />}
-        // onClick={() => Navigate({ to: "/cart" })}
-      >
-        Ajouter au panier
-      </Button>
+      {inCart ? (
+        <div>
+          {inCart.quantity} dans le panier
+          <Button
+            shape="circle"
+            icon={<PlusCircleOutlined />}
+            onClick={() => addToCart(product.id)}
+          />
+          <Button
+            shape="circle"
+            icon={<MinusCircleOutlined />}
+            onClick={() => removeFromCart(product.id)}
+          />
+        </div>
+      ) : (
+        <Button
+          type="primary"
+          size="large"
+          icon={<ShopOutlined />}
+          onClick={() => addToCart(product.id)}
+        >
+          Ajouter au panier
+        </Button>
+      )}
     </Card>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useAuth } from "../providers/authProvider";
-import { Navigate, redirect } from "react-router";
+import { useNavigate } from "react-router";
 
 type FieldType = {
   email?: string;
@@ -12,33 +12,45 @@ type FieldType = {
 
 const Login: React.FC = () => {
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { user, login } = useAuth();
+  let navigate = useNavigate();
 
-  if (user) {
-    console.log("User is logged in, redirecting to home page");
-    Navigate({ to: "/" });
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+  const onFinish: FormProps<FieldType>["onFinish"] = async ({
+    email,
+    password,
+  }) => {
+    if (!email || !password) {
+      return;
+    }
 
-    if (redirectUrl) {
-      Navigate({ to: redirectUrl });
-    } else {
-      Navigate({ to: "/" });
+    try {
+      await login({ email, password });
+
+      if (redirectUrl) {
+        navigate(redirectUrl);
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
     errorInfo
   ) => {
-    console.log("Failed:", errorInfo);
+    console.error("Failed:", errorInfo);
   };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const redir = params.get("redir");
-    console.log("Redirect URL parameter:", redir);
     setRedirectUrl(redir);
   }, []);
 
